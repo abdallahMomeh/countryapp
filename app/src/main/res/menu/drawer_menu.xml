@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="االرئيسية" />
+        <item
+            android:id="@+id/nav_farms"
+            android:title="المزارع" />
+        <item
+            android:id="@+id/nav_add_farm"
+            android:title="اضافة مزرعة" />
+
+        <item
+            android:id="@+id/nav_customer"
+            android:title="العملاء" />
+
+    </group>
+
+    <item android:title="اخري">
+        <menu>
+            <item
+                android:id="@+id/nav_about_us"
+                android:title="عن البرنامج" />
+            <item
+                android:id="@+id/nav_privacy_policy"
+                android:title="سياسات الخصوصية" />
+        </menu>
+    </item>
+
+</menu>

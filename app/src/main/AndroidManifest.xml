@@ -25,6 +25,10 @@
         <activity android:name=".ui.signup.view.SignupActivity"
             android:windowSoftInputMode="stateHidden"/>
 
+        <activity android:name=".ui.mainscreen.view.MainscreenActivity"
+            />
+
+
 
     </application>
 

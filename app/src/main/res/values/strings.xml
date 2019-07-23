@@ -8,4 +8,12 @@
     <string name="tager">تاجر</string>
     <string name="ownerFarm">صاحب مزرعة</string>
 
+    <string name="openDrawer" translatable="false" >open_drawer</string>
+    <string name="closeDrawer" translatable="false" >close_drawer</string>
+
+    <string name="mainscreen_title">الرئيسية</string>
+    <string name="fram_list">قائمة المزارع</string>
+    <string name="no_frams">لا يوجد مزارع لديك</string>
+
+
 </resources>
