@@ -1,0 +1,11 @@
+<resources>
+    
+    <string name="app_name">التاجر</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="phone">رقم التليفون</string>
+    <string name="password">كلمة المرور</string>
+    <string name="userType">نوع الاشتراك</string>
+    <string name="tager">تاجر</string>
+    <string name="ownerFarm">صاحب مزرعة</string>
+
+</resources>
