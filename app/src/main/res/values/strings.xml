@@ -1,6 +1,6 @@
 <resources>
     
-    <string name="app_name">التاجر</string>
+    <string name="app_name">دول العالم</string>
     <string name="username">اسم المستخدم</string>
     <string name="phone">رقم التليفون</string>
     <string name="password">كلمة المرور</string>
@@ -14,6 +14,8 @@
     <string name="mainscreen_title">الرئيسية</string>
     <string name="fram_list">قائمة المزارع</string>
     <string name="no_frams">لا يوجد مزارع لديك</string>
-
+    
+    <string name="coutories">دول</string>
+    <string name="continents">continents</string>
 
 </resources>
