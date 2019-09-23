@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.abdallahapps.coutoriesapp.APP;
 import com.abdallahapps.coutoriesapp.R;
+import com.abdallahapps.coutoriesapp.databinding.ContintentItemBinding;
+import com.abdallahapps.coutoriesapp.databinding.CountryItemBinding;
 import com.abdallahapps.coutoriesapp.model.dto.Continent;
 import com.abdallahapps.coutoriesapp.model.dto.ContinentList;
 import com.abdallahapps.coutoriesapp.model.dto.Country;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ContinentsRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -44,11 +47,13 @@ public class ContinentsRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         if (viewType == COUNTRY_ITEM ) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.country_item, parent, false);
-            return new CountryViewHolder(view);
+            CountryItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                    R.layout.country_item, parent, false);
+            return new CountryViewHolder(binding);
         } else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contintent_item, parent, false);
-            return new ContinentViewHolder(view);
+            ContintentItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                    R.layout.contintent_item, parent, false);
+            return new ContinentViewHolder(binding);
         }
     }
 
@@ -56,15 +61,17 @@ public class ContinentsRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         if ( holder instanceof ContinentViewHolder ){
+            ((ContinentViewHolder) holder).binding.setContinent(( ContinentList ) getCountries().get(position));
 
-            ((ContinentViewHolder)holder).continentTV.setText(( ( ContinentList ) getCountries().get(position)).getName());
+            //((ContinentViewHolder)holder).continentTV.setText(( ( ContinentList ) getCountries().get(position)).getName());
 
         }else {
-            ((CountryViewHolder)holder).countryName.setText(( (Country ) getCountries().get(position)).getName());
-            Glide.with(APP.context.getApplicationContext())
+            ((CountryViewHolder)holder).binding.setCountry(( (Country ) getCountries().get(position)));
+            //((CountryViewHolder)holder).countryName.setText(( (Country ) getCountries().get(position)).getName());
+            /*Glide.with(APP.context.getApplicationContext())
                     .load( ((Country) getCountries().get(position)).getFlag())
                     .placeholder(R.mipmap.ic_launcher)
-                    .into(((CountryViewHolder)holder).flag);
+                    .into(((CountryViewHolder)holder).flag);*/
         }
 
         holder.itemView.setOnClickListener(view -> {
@@ -107,22 +114,27 @@ public class ContinentsRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         ImageView flag;
         TextView countryName;
+        CountryItemBinding binding;
 
-        public CountryViewHolder(@NonNull View itemView) {
-            super(itemView);
+        public CountryViewHolder(CountryItemBinding countryItemBinding) {
+            super(countryItemBinding.getRoot());
 
-            flag = itemView.findViewById(R.id.flagIV);
-            countryName = itemView.findViewById(R.id.countryTV);
+            this.binding = countryItemBinding;
+            /*flag = itemView.findViewById(R.id.flagIV);
+            countryName = itemView.findViewById(R.id.countryTV);*/
 
         }
     }
 
     class  ContinentViewHolder extends  RecyclerView.ViewHolder{
 
+        ContintentItemBinding binding;
         TextView continentTV;
-        public ContinentViewHolder(@NonNull View itemView) {
-            super(itemView);
-            continentTV = itemView.findViewById(R.id.continentTV);
+        public ContinentViewHolder(ContintentItemBinding contintentItemBinding) {
+            super(contintentItemBinding.getRoot());
+            this.binding = contintentItemBinding;
+
+            //continentTV = itemView.findViewById(R.id.continentTV);
         }
     }
 

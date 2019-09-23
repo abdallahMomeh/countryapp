@@ -1,6 +1,14 @@
 package com.abdallahapps.coutoriesapp.model.dto;
 
+import android.widget.ImageView;
+
+import com.abdallahapps.coutoriesapp.APP;
+import com.abdallahapps.coutoriesapp.R;
+import com.abdallahapps.coutoriesapp.ui.home.view.ContinentsRVAdapter;
+import com.bumptech.glide.Glide;
 import com.google.gson.annotations.SerializedName;
+
+import androidx.databinding.BindingAdapter;
 
 public class Country {
 
@@ -16,7 +24,13 @@ public class Country {
 
 
 
-
+    @BindingAdapter("imageUrl")
+    public static void loadImage(ImageView view , String imageUrl){
+        Glide.with(view.getContext())
+                .load( imageUrl)
+                .placeholder(R.mipmap.ic_launcher)
+                .into(view);
+    }
 
 
 
