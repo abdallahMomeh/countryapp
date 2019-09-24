@@ -8,6 +8,8 @@ import com.abdallahapps.coutoriesapp.ui.home.view.ContinentsRVAdapter;
 import com.bumptech.glide.Glide;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 import androidx.databinding.BindingAdapter;
 
 public class Country {
@@ -22,6 +24,9 @@ public class Country {
     @SerializedName("flag_img")
     private  String flag;
 
+    private String info;
+
+    private List<String> images;
 
 
     @BindingAdapter("imageUrl")
@@ -56,5 +61,21 @@ public class Country {
 
     public void setFlag(String flag) {
         this.flag = flag;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }

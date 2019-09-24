@@ -48,19 +48,18 @@ public class DetailsCountryActivity extends BaseActivity {
             }
         }
 
-        detailsCountryVM.getFlag().observe(this , flagUrl ->{
+        detailsCountryVM.getAllData();
+        detailsCountryVM.flagLiveData.observe(this , flagUrl -> {
             Glide.with(this).load(flagUrl).placeholder(R.drawable.round_editable_bk).into(flag);
         });
-        detailsCountryVM.getInfo().observe(this , info -> {
+
+        detailsCountryVM.infoLiveData.observe(this , info -> {
             countryInfoTV.setText(info);
         });
 
-        detailsCountryVM.getImages().observe(this, imagesUrl -> {
-
+        detailsCountryVM.imagesLiveData.observe(this, imagesUrl -> {
             imagesRVAdapter.setImageUrl(imagesUrl);
         });
-
-
 
     }
 

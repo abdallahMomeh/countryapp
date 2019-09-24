@@ -38,4 +38,19 @@ public class ImagesDTO {
     public void setCountryImages(CountryImages countryImages) {
         this.countryImages = countryImages;
     }
+
+
+    public class CountryImages {
+
+        @SerializedName("images")
+        private List<String> images;
+
+        public List<String> getImages() {
+            return images;
+        }
+
+        public void setImages(List<String> images) {
+            this.images = images;
+        }
+    }
 }
