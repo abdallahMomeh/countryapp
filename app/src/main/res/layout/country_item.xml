@@ -6,7 +6,7 @@
     <data>
         <variable
             name="country"
-            type="com.abdallahapps.coutoriesapp.model.dto.Country"/>
+            type="com.abdallahapps.countriesapp.model.dto.Country"/>
     </data>
 
     <androidx.cardview.widget.CardView

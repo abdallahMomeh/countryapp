@@ -3,7 +3,7 @@
     <data>
         <variable
             name="continent"
-            type="com.abdallahapps.coutoriesapp.model.dto.ContinentList"/>
+            type="com.abdallahapps.countriesapp.model.dto.ContinentList"/>
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
