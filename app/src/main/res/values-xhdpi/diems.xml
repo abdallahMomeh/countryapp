@@ -13,5 +13,7 @@
     <dimen name="dime_170">170dp</dimen>
     <dimen name="dime_200">200dp</dimen>
 
+    <dimen name="dime_140">145dp</dimen>
 
+    <dimen name="heighOfCountryFlag">145dp</dimen>
 </resources>

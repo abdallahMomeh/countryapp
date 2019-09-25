@@ -8,10 +8,13 @@
     <dimen name="dime_20">21dp</dimen>
     <dimen name="dime_22">23dp</dimen>
 
+    <dimen name="dime_45">45dp</dimen>
     <dimen name="dime_50">60dp</dimen>
     <dimen name="dime_150">170dp</dimen>
     <dimen name="dime_170">180dp</dimen>
     <dimen name="dime_200">220dp</dimen>
 
+    <dimen name="dime_140">150dp</dimen>
 
+    <dimen name="heighOfCountryFlag">150dp</dimen>
 </resources>

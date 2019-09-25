@@ -8,9 +8,12 @@
     <dimen name="dime_20">20dp</dimen>
     <dimen name="dime_22">22dp</dimen>
 
+    <dimen name="dime_45">45dp</dimen>
+
     <dimen name="dime_50">50dp</dimen>
     <dimen name="dime_150">150dp</dimen>
     <dimen name="dime_200">200dp</dimen>
 
+    <dimen name="dime_140">140dp</dimen>
 
 </resources>
