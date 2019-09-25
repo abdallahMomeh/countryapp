@@ -17,4 +17,5 @@
     <dimen name="dime_140">150dp</dimen>
 
     <dimen name="heighOfCountryFlag">150dp</dimen>
+    <dimen name="h_flag_in_details">180dp</dimen>
 </resources>
