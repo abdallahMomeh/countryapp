@@ -2,6 +2,8 @@
 
 this is repository contain two activity . 
 
+i use : MVVM , Livedata , databinding , retrofit amd RXjava.
+
 1- home screen : contain header + recyclerView of continents and thier countries
     use databinding in recyclerview
 
