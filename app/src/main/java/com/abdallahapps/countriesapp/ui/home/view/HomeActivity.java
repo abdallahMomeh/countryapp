@@ -30,7 +30,7 @@ public class HomeActivity extends BaseActivity {
         initViews();
         homeVM = ViewModelProviders.of(this).get(HomeVM.class);
 
-        homeVM.continentLiveData.observe(this , continent ->{
+        homeVM.getContinentLiveData().observe(this , continent ->{
             continentsRVAdapter.addContinent(continent);
             Log.d("myTag","get continentLiveData");
         } );

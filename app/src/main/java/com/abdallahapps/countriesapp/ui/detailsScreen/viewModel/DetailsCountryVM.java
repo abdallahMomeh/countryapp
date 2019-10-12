@@ -9,10 +9,8 @@ import com.abdallahapps.countriesapp.model.dto.InfoDTO;
 import com.abdallahapps.countriesapp.model.source.network.ApiFactory;
 import com.abdallahapps.countriesapp.model.source.network.ApiService;
 
-import java.util.List;
-
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -23,9 +21,10 @@ import io.reactivex.schedulers.Schedulers;
 public class DetailsCountryVM extends ViewModel {
 
     private int countryId;
-    public LiveData<String> infoLiveData = new MediatorLiveData<>();
-    public LiveData<String> flagLiveData = new MediatorLiveData<>();
-    public LiveData<List<String>> imagesLiveData = new MediatorLiveData<>();
+    private LiveData<Country> countryLiveData  = new MutableLiveData<>();
+    //public LiveData<String> infoLiveData = new MediatorLiveData<>();
+    //public LiveData<String> flagLiveData = new MediatorLiveData<>();
+    //public LiveData<List<String>> imagesLiveData = new MediatorLiveData<>();
 
     public void getAllData(){
 
@@ -48,18 +47,25 @@ public class DetailsCountryVM extends ViewModel {
             @Override
             public void accept(Object o) throws Exception {
                 Log.d("myTag","accept");
-                ((MediatorLiveData<String>)flagLiveData).setValue(((Country)o).getFlag());
+
+                ((MutableLiveData<Country>) getCountryLiveData()).setValue(((Country)o));
+
+                /*((MediatorLiveData<String>)flagLiveData).setValue(((Country)o).getFlag());
                 ((MediatorLiveData<String>)infoLiveData).setValue(((Country)o).getInfo());
-                ((MediatorLiveData<List<String>>)imagesLiveData).setValue(((Country)o).getImages());
+                ((MediatorLiveData<List<String>>)imagesLiveData).setValue(((Country)o).getImages());*/
             }
         });
     }
 
-    public int getCountryId() {
-        return countryId;
-    }
+
 
     public void setCountryId(int countryId) {
         this.countryId = countryId;
     }
+
+    public LiveData<Country> getCountryLiveData() {
+        return countryLiveData;
+    }
+
+
 }
