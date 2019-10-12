@@ -22,9 +22,6 @@ public class DetailsCountryVM extends ViewModel {
 
     private int countryId;
     private LiveData<Country> countryLiveData  = new MutableLiveData<>();
-    //public LiveData<String> infoLiveData = new MediatorLiveData<>();
-    //public LiveData<String> flagLiveData = new MediatorLiveData<>();
-    //public LiveData<List<String>> imagesLiveData = new MediatorLiveData<>();
 
     public void getAllData(){
 
@@ -50,9 +47,6 @@ public class DetailsCountryVM extends ViewModel {
 
                 ((MutableLiveData<Country>) getCountryLiveData()).setValue(((Country)o));
 
-                /*((MediatorLiveData<String>)flagLiveData).setValue(((Country)o).getFlag());
-                ((MediatorLiveData<String>)infoLiveData).setValue(((Country)o).getInfo());
-                ((MediatorLiveData<List<String>>)imagesLiveData).setValue(((Country)o).getImages());*/
             }
         });
     }
