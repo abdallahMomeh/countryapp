@@ -1,27 +1,38 @@
 package com.abdallahapps.countriesapp.ui.home.viewModel;
 
+import android.app.Application;
 import android.util.Log;
 
 import com.abdallahapps.countriesapp.model.dto.Continent;
 import com.abdallahapps.countriesapp.model.source.network.ApiFactory;
 import com.abdallahapps.countriesapp.model.source.network.ApiService;
+import com.abdallahapps.countriesapp.util.ContinentDatasourceFactrory;
+import com.abdallahapps.countriesapp.util.ContintentDataSource;
+
+import java.util.List;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class HomeVM extends ViewModel {
 
-    //public LiveData<List<Integer>> countiresIdsLiveData = new MediatorLiveData<>();
 
-    private LiveData<Continent> continentLiveData = new MutableLiveData<>();
+    public LiveData<List<Integer>> contintentIds = new MutableLiveData<>();
+
+    //PagedList controls data loading using data source
+    public LiveData<PagedList<Object>> countryList ;
 
     public HomeVM(){
-        getContinents();
+       getContinents();
+
     }
+
 
     public void getContinents(){
 
@@ -31,13 +42,7 @@ public class HomeVM extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( contintentIdsDTO  -> {
 
-                    /*((MediatorLiveData<List<Integer>>)countiresIdsLiveData)
-                            .setValue(contintentIdsDTO.getContinentsIds());*/
-                    Log.d("myTag","on sucess get continents "+contintentIdsDTO.getContinentsIds().size());
-
-                    for (int i=0 ; i<contintentIdsDTO.getContinentsIds().size(); i++){
-                        getContinent(contintentIdsDTO.getContinentsIds().get(i));
-                    }
+                    ((MutableLiveData)contintentIds).setValue(contintentIdsDTO.getContinentsIds());
 
                 },throwable -> {
                     throwable.printStackTrace();
@@ -45,25 +50,35 @@ public class HomeVM extends ViewModel {
                 });
     }
 
+    public void initPaging( List<Integer> continentsIds ){
+
+        //instantiate CouponsDataSourceFactory
+        ContinentDatasourceFactrory factory = new ContinentDatasourceFactrory();
 
 
-    void getContinent(int continentId){
+        //create PagedList Config
+        PagedList.Config config = new PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                //.setInitialLoadSizeHint(1)
+                .setPageSize(continentsIds.size()).build();
 
-        ApiService apiService = ApiFactory.create();
-        apiService.getContinentById(continentId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(continentDTO -> {
-                    ((MutableLiveData<Continent>) getContinentLiveData()).setValue(continentDTO.getContinent());
-                    Log.d("myTag" , "on success get continent");
-                },throwable -> {
-                   throwable.printStackTrace();
-                });
+        //create LiveData object using LivePagedListBuilder which takes
+        //data source factory and page config as params
+        countryList = new LivePagedListBuilder<>(factory, config).build();
     }
 
+   /* //factory for creating view model,
+    // required because we need to pass Application to view model object
+    public static class CouponViewModelFactory extends ViewModelProvider.NewInstanceFactory {
+        private Application mApplication;
+        public CouponViewModelFactory(Application application) {
+            mApplication = application;
+        }
+        @Override
+        public <T extends ViewModel> T create(Class<T> viewModel) {
+            return (T) new HomeVM(mApplication);
+        }
+    }*/
 
-    public LiveData<Continent> getContinentLiveData() {
-        return continentLiveData;
-    }
 
 }

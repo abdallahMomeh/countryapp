@@ -2,7 +2,6 @@ package com.abdallahapps.countriesapp.ui.home.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.abdallahapps.countriesapp.R;
 import com.abdallahapps.countriesapp.model.dto.ContinentList;
@@ -18,9 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class HomeActivity extends BaseActivity {
 
-    HomeVM homeVM;
+
+    HomeVM homeVM2;
     RecyclerView countriesRV;
-    ContinentsRVAdapter  continentsRVAdapter;
+    ContintentAdapter contintentAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,30 +28,39 @@ public class HomeActivity extends BaseActivity {
         setContentView(R.layout.activity_home);
 
         initViews();
-        homeVM = ViewModelProviders.of(this).get(HomeVM.class);
 
-        homeVM.getContinentLiveData().observe(this , continent ->{
-            continentsRVAdapter.addContinent(continent);
-            Log.d("myTag","get continentLiveData");
-        } );
+        homeVM2 = ViewModelProviders.of(this).get(HomeVM.class);
+        homeVM2.contintentIds.observe(this , continentsIds -> {
+            homeVM2.initPaging(continentsIds);
+            observeContinents();
+        });
+
 
     }
 
+    void observeContinents(){
+        homeVM2.countryList.observe(this,continents -> {
+            contintentAdapter.submitList(continents);
+        });
+    }
 
     void initViews(){
 
-        countriesRV = findViewById(R.id.countriesRV);
-        continentsRVAdapter = new ContinentsRVAdapter();
-        continentsRVAdapter.setOnCountryClickedListener(country -> {
-            startActivity(new Intent(this, DetailsCountryActivity.class)
-                        .putExtra("country",new Gson().toJson(country)));
-        });
+       countriesRV = findViewById(R.id.countriesRV);
+       contintentAdapter = new ContintentAdapter();
+       contintentAdapter.setOnCountryClickedListener( country -> {
+
+           startActivity(new Intent(this, DetailsCountryActivity.class)
+                   .putExtra("country",new Gson().toJson(country)));
+
+       });
+
         GridLayoutManager manager = new GridLayoutManager(this,2);
         manager.setSpanSizeLookup( new GridLayoutManager.SpanSizeLookup(){
             @Override
             public int getSpanSize(int position) {
 
-                if (continentsRVAdapter.getCountries().get(position) instanceof ContinentList){
+                if (contintentAdapter.getItem(position) instanceof ContinentList){
                     return 2;
                 }else {
                     return 1;
@@ -61,7 +70,7 @@ public class HomeActivity extends BaseActivity {
         });
 
         countriesRV.setLayoutManager(manager);
-        countriesRV.setAdapter(continentsRVAdapter);
+        countriesRV.setAdapter(contintentAdapter);
 
     }
 }

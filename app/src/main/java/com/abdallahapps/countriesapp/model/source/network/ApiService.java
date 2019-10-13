@@ -7,6 +7,7 @@ import com.abdallahapps.countriesapp.model.dto.ImagesDTO;
 import com.abdallahapps.countriesapp.model.dto.InfoDTO;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -19,13 +20,13 @@ public interface ApiService {
 
     @POST("test2.php")
     @FormUrlEncoded
-    Observable<ResponseBody>  login (@Field("name") String name , @Field("email") String email);
+    Single<ResponseBody> login (@Field("name") String name , @Field("email") String email);
 
     @GET("get_continents_ids")
-    Observable<ContintentIdsDTO> getContinents();
+    Single<ContintentIdsDTO> getContinents();
 
     @GET("get_continent_byId")
-    Observable<ContinentDTO> getContinentById(@Query("continent_id")int continentId);
+    Single<ContinentDTO> getContinentById(@Query("continent_id")int continentId);
 
 
     @GET("get_flag")

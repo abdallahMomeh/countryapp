@@ -1,5 +1,6 @@
 package com.abdallahapps.countriesapp.ui.home.view;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,26 +16,69 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.paging.PagedList;
+import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ContinentsRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+public class ContintentAdapter extends PagedListAdapter<Object, RecyclerView.ViewHolder> {
 
     public final int COUNTRY_ITEM = 1 ;
     public final int CONTINENT_ITEM = 2 ;
 
-    private List<Object> countries = new ArrayList<>();
     private OnCountryClickedListener onCountryClickedListener;
+
+    protected ContintentAdapter() {
+        super(DIFF_CALLBACK);
+    }
+
+
+
+    //DiffUtil is used to find out whether two object in the list are same or not
+    public static DiffUtil.ItemCallback<Object> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<Object>() {
+                @Override
+                public boolean areItemsTheSame(@NonNull Object oldCoupon,
+                                               @NonNull Object newCoupon) {
+                    Log.d("myTag", "areItemsTheSame");
+                    if (oldCoupon instanceof Country && newCoupon instanceof ContinentList)
+                        return false;
+                    else if (oldCoupon instanceof ContinentList && newCoupon instanceof Country)
+                        return false;
+                    else
+                        return ((Country)oldCoupon).getId() == ((Country)newCoupon).getId();
+                }
+
+                @Override
+                public boolean areContentsTheSame(@NonNull Object oldCoupon,
+                                                  @NonNull Object newCoupon) {
+                    Log.d("myTag", "areContentsTheSame");
+                    return  false; //oldCoupon.equals(newCoupon);
+                }
+            };
 
 
     @Override
     public int getItemViewType(int position) {
-        if (getCountries().get(position) instanceof Country){
-            return COUNTRY_ITEM;
-        }else {
+        Log.d("myTag", "getItemViewType");
+        if (getItem(position) instanceof ContinentList){
             return CONTINENT_ITEM;
+        }else {
+            return COUNTRY_ITEM;
         }
+
     }
+
+
+    @Nullable
+    @Override
+    protected Object getItem(int position) {
+        return super.getItem(position);
+    }
+
 
     @NonNull
     @Override
@@ -54,57 +98,33 @@ public class ContinentsRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        if ( holder instanceof ContinentViewHolder ){
-            ((ContinentViewHolder) holder).binding.setContinent(( ContinentList ) getCountries().get(position));
+        Log.d("myTag", "onBind");
+
+        if ( holder instanceof ContinentViewHolder){
+            ((ContinentViewHolder) holder).binding.setContinent((ContinentList) getItem(position));
         }else {
-            ((CountryViewHolder)holder).binding.setCountry(( (Country ) getCountries().get(position)));
+            ((CountryViewHolder)holder).binding.setCountry((Country) getItem(position));
         }
 
         holder.itemView.setOnClickListener(view -> {
             if (holder instanceof CountryViewHolder){
-                onCountryClickedListener.onCountryClicked((Country)countries.get(position));
-                /*APP.context.startActivity(new Intent(APP.context, DetailsCountryActivity.class)
-                        .putExtra("country",new Gson().toJson(((Country)countries.get(position)))));*/
+
+                onCountryClickedListener.onCountryClicked((Country)getItem(position));
+
             }
         });
     }
 
-
-
     @Override
-    public int getItemCount() {
-        return getCountries().size();
+    public long getItemId(int position) {
+        return position;
     }
 
-    public void addContinent(Continent continent){
-
-        ContinentList c = new ContinentList();
-        c.setId(continent.getId());
-        c.setName(continent.getName());
-        getCountries().add(c);
-
-        for (int i=0; i<continent.getCountries().size(); i++){
-            getCountries().add(continent.getCountries().get(i));
-        }
-        notifyDataSetChanged();
-
-    }
-
-    public List<Object> getCountries() {
-        return countries;
-    }
-
-    public void setCountries(List<Object> countries) {
-        this.countries = countries;
-    }
-
-    public OnCountryClickedListener getOnCountryClickedListener() {
-        return onCountryClickedListener;
-    }
 
     public void setOnCountryClickedListener(OnCountryClickedListener onCountryClickedListener) {
         this.onCountryClickedListener = onCountryClickedListener;
     }
+
 
     class  CountryViewHolder extends  RecyclerView.ViewHolder{
 

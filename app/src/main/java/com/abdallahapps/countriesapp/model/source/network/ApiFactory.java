@@ -12,13 +12,20 @@ public class ApiFactory {
 
     public static String BASE_URL = "http://167.99.34.17/api/";
 
+    private static ApiService apiService;
+
     public static ApiService create() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
-                .client(get_HTTPClient())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-        return retrofit.create( ApiService.class);
+
+        if (apiService == null) {
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
+                    .client(get_HTTPClient())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build();
+            apiService = retrofit.create(ApiService.class);
+
+        }
+        return apiService;
     }
 
 
